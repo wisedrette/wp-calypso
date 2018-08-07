@@ -60,6 +60,7 @@ RUN        true                                 && \
                /calypso/bin                        \
                /calypso/client                     \
                /calypso/build/.babel-server-cache  \
+               /calypso/build/.babel-client-cache  \
                                                 && \
            true
 

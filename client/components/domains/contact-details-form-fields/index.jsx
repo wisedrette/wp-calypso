@@ -85,6 +85,7 @@ export class ContactDetailsFormFields extends Component {
 		userCountryCode: PropTypes.string,
 		needsOnlyGoogleAppsDetails: PropTypes.bool,
 		hasCountryStates: PropTypes.bool,
+		hideFooter: PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -106,6 +107,7 @@ export class ContactDetailsFormFields extends Component {
 		hasCountryStates: false,
 		translate: identity,
 		userCountryCode: 'US',
+		hideFooter: false,
 	};
 
 	constructor( props ) {
@@ -450,25 +452,27 @@ export class ContactDetailsFormFields extends Component {
 
 				<div className="contact-details-form-fields__extra-fields">{ this.props.children }</div>
 
-				<FormFooter>
-					<FormButton
-						className="contact-details-form-fields__submit-button"
-						disabled={ ! countryCode || disableSubmitButton }
-						onClick={ this.handleSubmitButtonClick }
-					>
-						{ labelTexts.submitButton || translate( 'Submit' ) }
-					</FormButton>
-					{ onCancel && (
+				{ ! this.props.hideFooter &&
+					<FormFooter>
 						<FormButton
-							className="contact-details-form-fields__cancel-button"
-							type="button"
-							isPrimary={ false }
-							onClick={ onCancel }
+							className="contact-details-form-fields__submit-button"
+							disabled={ ! countryCode || disableSubmitButton }
+							onClick={ this.handleSubmitButtonClick }
 						>
-							{ translate( 'Cancel' ) }
+							{ labelTexts.submitButton || translate( 'Submit' ) }
 						</FormButton>
-					) }
-				</FormFooter>
+						{ onCancel && (
+							<FormButton
+								className="contact-details-form-fields__cancel-button"
+								type="button"
+								isPrimary={ false }
+								onClick={ onCancel }
+							>
+								{ translate( 'Cancel' ) }
+							</FormButton>
+						) }
+					</FormFooter>
+				}
 				<QueryDomainCountries />
 			</FormFieldset>
 		);

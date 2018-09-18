@@ -12,12 +12,11 @@ import { connect } from 'react-redux';
 import InlineHelp from 'blocks/inline-help';
 import config from 'config';
 import hasActiveHappychatSession from 'state/happychat/selectors/has-active-happychat-session';
-import HappychatButton from 'components/happychat/button';
+import InlineHelpHappychat from 'components/inline-help-happychat';
 import { isCommunityTranslatorEnabled } from 'components/community-translator/utils';
 import AsyncLoad from 'components/async-load';
 import TranslatorLauncher from 'layout/community-translator/launcher';
 import EnvironmentBadge from 'blocks/environment-badge';
-
 
 const FloatingActions = ( { isHappychatButtonVisible, showInlineHelp = true } ) => (
 	<div className="floating-actions">
@@ -30,7 +29,7 @@ const FloatingActions = ( { isHappychatButtonVisible, showInlineHelp = true } ) 
 				<TranslatorLauncher />
 			) }
 			{ isHappychatButtonVisible &&
-				config.isEnabled( 'happychat' ) && <HappychatButton allowMobileRedirect /> }
+				config.isEnabled( 'happychat' ) && <InlineHelpHappychat allowMobileRedirect /> }
 		</div>
 		<EnvironmentBadge />
 	</div>

@@ -66,6 +66,7 @@ import { requestActivityLogs } from 'state/data-getters';
 import { emptyFilter } from 'state/activity-log/reducer';
 import { isMobile } from 'lib/viewport';
 import analytics from 'lib/analytics';
+import withLocalizedMoment from 'components/with-localized-moment';
 
 const PAGE_SIZE = 20;
 
@@ -494,12 +495,12 @@ class ActivityLog extends Component {
 		}
 
 		return (
-				<Filterbar
-					siteId={ siteId }
-					filter={ filter }
-					isLoading={ logLoadingState !== 'success' }
-					isVisible={ ! ( isEmpty( logs ) && isFilterEmpty ) }
-				/>
+			<Filterbar
+				siteId={ siteId }
+				filter={ filter }
+				isLoading={ logLoadingState !== 'success' }
+				isVisible={ ! ( isEmpty( logs ) && isFilterEmpty ) }
+			/>
 		);
 	}
 
@@ -611,4 +612,4 @@ export default connect(
 			),
 		selectPage: ( siteId, pageNumber ) => updateFilter( siteId, { page: pageNumber } ),
 	}
-)( localize( ActivityLog ) );
+)( localize( withLocalizedMoment( ActivityLog ) ) );

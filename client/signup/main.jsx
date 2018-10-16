@@ -490,7 +490,11 @@ class Signup extends React.Component {
 
 	getPositionInFlow( fakedForTwoPartFlows = false ) {
 		let position = indexOf( flows.getFlow( this.props.flowName ).steps, this.props.stepName );
-		if ( fakedForTwoPartFlows && this.props.flowName === 'user-continue' ) {
+		if (
+			fakedForTwoPartFlows &&
+			( this.props.flowName === 'user-continue' ||
+				this.props.flowName === 'main-onboarding-continue' )
+		) {
 			position++;
 		}
 		return position;
@@ -502,7 +506,7 @@ class Signup extends React.Component {
 			return 4;
 		}
 		if ( [ 'main-onboarding', 'main-onboarding-continue' ].includes( this.props.flowName ) ) {
-			return 6;
+			return 5;
 		}
 		return flows.getFlow( this.props.flowName ).steps.length;
 	}

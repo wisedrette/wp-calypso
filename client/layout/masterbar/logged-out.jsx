@@ -44,7 +44,8 @@ class MasterbarLoggedOut extends PureComponent {
 		const { currentQuery, currentRoute, sectionName, translate, redirectUri } = this.props;
 		if (
 			includes( [ 'login', 'jetpack-onboarding' ], sectionName ) ||
-			startsWith( currentRoute, '/start/user-continue/' )
+			startsWith( currentRoute, '/start/user-continue/' ) ||
+			startsWith( currentRoute, '/start/main-onboarding-continue/' )
 		) {
 			return null;
 		}

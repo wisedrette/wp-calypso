@@ -191,11 +191,11 @@ class SiteSettingsImport extends Component {
 			api: { isHydrated },
 			importers: imports,
 		} = this.state;
-		const { fromSite, site } = this.props;
+		const { engine, site } = this.props;
 		const { slug, title } = site;
 		const siteTitle = title.length ? title : slug;
 
-		if ( ! isHydrated && ! fromSite ) {
+		if ( ! ( isHydrated && engine ) ) {
 			return this.renderIdleImporters( site, siteTitle, appStates.DISABLED );
 		}
 

@@ -29,6 +29,7 @@ import { requestGuidedTour } from 'state/ui/guided-tours/actions';
 import { requestSiteChecklistTaskUpdate } from 'state/checklist/actions';
 import { getCurrentUser, isCurrentUserEmailVerified } from 'state/current-user/selectors';
 import userFactory from 'lib/user';
+import createSelector from 'lib/create-selector';
 
 const userLib = userFactory();
 
@@ -332,22 +333,36 @@ function getContactPage( posts ) {
 	);
 }
 
+const getTaskUrls = createSelector(
+	( state, siteId ) => {
+		const posts = getPostsForQuery( state, siteId, query );
+
+		const firstPost = find( posts, { type: 'post' } );
+		const siteSlug = getSiteSlug( state, siteId );
+		const contactPage = getContactPage( posts );
+
+		return {
+			post_published: compact( [ '/post', siteSlug, get( firstPost, [ 'ID' ] ) ] ).join( '/' ),
+			contact_page_updated: [ '/page', siteSlug, get( contactPage, [ 'ID' ], 2 ) ].join( '/' ),
+		};
+	},
+	(
+		state,
+		siteId,
+		siteSlug = getSiteSlug( state, siteId ),
+		posts = getPostsForQuery( state, siteId, query ),
+		contactPage = getContactPage( posts )
+	) => [ siteId, siteSlug, posts, contactPage ]
+);
+
 export default connect(
 	state => {
 		const siteId = getSelectedSiteId( state );
 		const siteSlug = getSiteSlug( state, siteId );
 
-		const posts = getPostsForQuery( state, siteId, query );
-
-		const firstPost = find( posts, { type: 'post' } );
-		const contactPage = getContactPage( posts );
-
 		const user = getCurrentUser( state );
 
-		const taskUrls = {
-			post_published: compact( [ '/post', siteSlug, get( firstPost, [ 'ID' ] ) ] ).join( '/' ),
-			contact_page_updated: [ '/page', siteSlug, get( contactPage, [ 'ID' ], 2 ) ].join( '/' ),
-		};
+		const taskUrls = getTaskUrls( state, siteId );
 
 		return {
 			designType: getSiteOption( state, siteId, 'design_type' ),

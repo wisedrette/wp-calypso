@@ -33,11 +33,13 @@ import { getSelectedSiteId, getSelectedSiteSlug } from 'state/ui/selectors';
 import { getSiteOption, isJetpackSite } from 'state/sites/selectors';
 import { recordGoogleEvent } from 'state/analytics/actions';
 import PrivacyPolicyBanner from 'blocks/privacy-policy-banner';
-import WpcomChecklist from 'my-sites/checklist/wpcom-checklist';
 import QuerySiteKeyrings from 'components/data/query-site-keyrings';
 import QueryKeyringConnections from 'components/data/query-keyring-connections';
 import GoogleMyBusinessStatsNudge from 'blocks/google-my-business-stats-nudge';
 import isGoogleMyBusinessStatsNudgeVisibleSelector from 'state/selectors/is-google-my-business-stats-nudge-visible';
+import AsyncLoad from 'components/async-load';
+import isEligibleForDotcomChecklist from 'state/selectors/is-eligible-for-dotcom-checklist';
+import { getNeverShowBannerStatus } from 'my-sites/checklist/wpcom-checklist/checklist-banner/never-show';
 
 function updateQueryString( query = {} ) {
 	return {
@@ -168,7 +170,10 @@ class StatsSite extends Component {
 					slug={ slug }
 				/>
 				<div id="my-stats-content">
-					{ config.isEnabled( 'onboarding-checklist' ) && <WpcomChecklist viewMode="banner" /> }
+					{ this.props.isEligibleForChecklist &&
+						! getNeverShowBannerStatus( this.props.siteId ) && (
+							<AsyncLoad require="my-sites/checklist/wpcom-checklist" viewMode="banner" />
+						) }
 					{ config.isEnabled( 'google-my-business' ) &&
 						siteId && (
 							<GoogleMyBusinessStatsNudge
@@ -272,6 +277,7 @@ export default connect(
 	state => {
 		const siteId = getSelectedSiteId( state );
 		const isJetpack = isJetpackSite( state, siteId );
+		const isEligibleForChecklist = isEligibleForDotcomChecklist( state, siteId );
 
 		return {
 			isJetpack,
@@ -287,6 +293,7 @@ export default connect(
 			),
 			siteId,
 			slug: getSelectedSiteSlug( state ),
+			isEligibleForChecklist,
 		};
 	},
 	{ recordGoogleEvent }

@@ -18,17 +18,18 @@ describe( 'requestFollow', () => {
 		const result = requestFollow( action );
 
 		expect( result ).toEqual(
-			http( {
-				method: 'POST',
-				path: '/read/following/mine/new',
-				apiVersion: '1.1',
-				body: {
-					url: 'http://example.com',
-					source: 'calypso',
+			http(
+				{
+					method: 'POST',
+					path: '/read/following/mine/new',
+					apiVersion: '1.1',
+					body: {
+						url: 'http://example.com',
+						source: 'calypso',
+					},
 				},
-				onSuccess: action,
-				onFailure: action,
-			} )
+				action
+			)
 		);
 	} );
 } );

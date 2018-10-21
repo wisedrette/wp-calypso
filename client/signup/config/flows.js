@@ -124,6 +124,9 @@ function filterFlowName( flowName ) {
 		if ( flowName === 'user-first' ) {
 			flowName = 'main';
 		}
+		if ( flowName === 'main-onboarding' ) {
+			flowName = 'main-onboarding-continue';
+		}
 	} else {
 		// don't allow user-first phase two when logged out, has no user step
 		if ( flowName === 'user-continue' ) {

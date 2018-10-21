@@ -506,7 +506,7 @@ class Signup extends React.Component {
 			return 4;
 		}
 		if ( [ 'main-onboarding', 'main-onboarding-continue' ].includes( this.props.flowName ) ) {
-			return 5;
+			return 6;
 		}
 		return flows.getFlow( this.props.flowName ).steps.length;
 	}

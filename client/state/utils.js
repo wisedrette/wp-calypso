@@ -553,20 +553,16 @@ function createCombinedReducer( validatedReducers ) {
 		return createCombinedReducer( { ...validatedReducers, [ key ]: newReducer } );
 	};
 
-	combinedWithSerializer.getStorageKeys = function() {
-		return flatMap( validatedReducers, reducer => {
-			const storageKeys = [];
-
+	combinedWithSerializer.getStorageKeys = function*() {
+		for ( const reducer of validatedReducers ) {
 			if ( reducer.storageKey ) {
-				storageKeys.push( { storageKey: reducer.storageKey, reducer } );
+				yield { storageKey: reducer.storageKey, reducer };
 			}
 
 			if ( reducer.getStorageKeys ) {
-				storageKeys.push( ...reducer.getStorageKeys() );
+				yield* reducer.getStorageKeys();
 			}
-
-			return storageKeys;
-		} );
+		}
 	};
 
 	return combinedWithSerializer;

@@ -223,10 +223,10 @@ async function getInitialStoredState( initialReducer ) {
 
 	console.log( 'root state from storage:', initialStoredState );
 
-	const storageKeys = initialReducer.getStorageKeys();
+	const storageKeys = [ ...initialReducer.getStorageKeys() ];
 	console.log( 'storage keys in initial reducer:', map( storageKeys, 'storageKey' ) );
 
-	const loadTasks = map( storageKeys, async ( { storageKey, reducer } ) => {
+	async function loadReducerState( { storageKey, reducer } ) {
 		const storedState = await getStateFromLocalStorage( reducer, storageKey );
 		console.log( 'state from storage:', storageKey, storedState );
 
@@ -237,9 +237,9 @@ async function getInitialStoredState( initialReducer ) {
 				storedState,
 			} );
 		}
-	} );
+	}
 
-	await Promise.all( loadTasks );
+	await Promise.all( map( storageKeys, loadReducerState ) );
 
 	console.log( 'root state after complete load:', initialStoredState );
 	return initialStoredState;

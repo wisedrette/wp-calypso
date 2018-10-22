@@ -346,13 +346,7 @@ const getTaskUrls = createSelector(
 			contact_page_updated: [ '/page', siteSlug, get( contactPage, [ 'ID' ], 2 ) ].join( '/' ),
 		};
 	},
-	(
-		state,
-		siteId,
-		siteSlug = getSiteSlug( state, siteId ),
-		posts = getPostsForQuery( state, siteId, query ),
-		contactPage = getContactPage( posts )
-	) => [ siteId, siteSlug, posts, contactPage ]
+	( state, siteId, posts = getPostsForQuery( state, siteId, query ) ) => [ posts ]
 );
 
 export default connect(

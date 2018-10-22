@@ -34,13 +34,15 @@ export class ChecklistBanner extends Component {
 
 	handleClose = () => {
 		const { siteId } = this.props;
-		setNeverShowBannerStatus( true );
+		setNeverShowBannerStatus( siteId, true );
 
 		this.setState( { closed: true } );
 
-		this.props.track( 'calypso_checklist_banner_close', {
-			site_id: siteId,
-		} );
+		if ( this.props.track ) {
+			this.props.track( 'calypso_checklist_banner_close', {
+				site_id: siteId,
+			} );
+		}
 	};
 
 	canShow() {

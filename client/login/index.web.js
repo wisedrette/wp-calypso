@@ -14,8 +14,12 @@ import {
 } from './controller';
 import { setShouldServerSideRenderLogin } from './ssr';
 import { makeLayout, redirectLoggedIn, setUpLocale } from 'controller';
+import { addReduxReducer } from 'lib/redux-bridge';
+import reducer from 'state/login/reducer';
 
-export default router => {
+export default async router => {
+	await addReduxReducer( [ 'login' ], reducer );
+
 	if ( config.isEnabled( 'login/magic-login' ) ) {
 		router(
 			`/log-in/link/use/${ lang }`,

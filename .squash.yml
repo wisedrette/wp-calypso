@@ -1,9 +1,9 @@
 deployments:
-	WpCalipso:
-		build_steps:
-			- curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-			- sudo apt-get install -y nodejs
-		launch_steps:
-			npm start
+  WpCalipso:
+    build_steps:
+      - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+      - sudo apt-get install -y nodejs
+    launch_steps:
+      npm start
     port_forwarding:
       80:3000

@@ -1,8 +1,9 @@
 deployments:
   WpCalipso:
     build_steps:
+      - apt-get install curl libcurl3 libcurl3-dev php5-curl
       - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-      - sudo apt-get install -y nodejs
+      - apt-get install -y nodejs
     launch_steps:
       npm start
     port_forwarding:

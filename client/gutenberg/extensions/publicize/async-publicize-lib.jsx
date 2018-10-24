@@ -1,12 +1,10 @@
+/** @format */
 /**
  * Data access functions for Publicizing in Gutenberg.
  *
  * This file contains a set of helper functions that
  * gather data and/or send requests for data to support
  * the features of Publicize in Gutenberg.
- *
- * @file Data access functions for Gutenberg Publicize extension.
- * @since  5.9.1
  */
 
 /**
@@ -17,20 +15,13 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Module variables
  */
-const {
-	gutenberg_publicize_setup,
-	ajaxurl,
-} = window;
+const { gutenberg_publicize_setup } = window;
 
 /**
  * Get connection form set up data.
  *
  * Retrieves array of filtered connection UI data (labels, checked value,
  * URLs, etc.) from window global. This data only updates on refresh.
- *
- * @see ui.php
- *
- * @since 5.9.1
  *
  * @return {object} List of filtered connection UI data.
  */
@@ -44,10 +35,6 @@ export function getStaticPublicizeConnections() {
  * Retrieves array of filtered connection UI data (labels, checked value).
  * Connection list is queried based on post id because the connection
  * filtering depends on current post.
- *
- * @see ui.php
- *
- * @since 5.9.1
  *
  * @param {integer} postId ID of post to query connection defaults for.
  *
@@ -64,8 +51,6 @@ export function requestPublicizeConnections( postId ) {
  *
  * Gets list of possible social sites ('twitter', 'facebook, etc..')
  *
- * @since 5.9.1
- *
  * @return {object} List of possible services that can be connected to
  */
 export function getAllConnections() {
@@ -75,17 +60,10 @@ export function getAllConnections() {
 /**
  * Verifies that all connections are still functioning.
  *
- * Ajax request handled by 'wp_ajax_test_publicize_conns' action
- * in {@see publicize.php}.
- *
- * @since 5.9.1
- *
  * @return {object} List of possible services that can be connected to
  */
 export function requestTestPublicizeConnections() {
 	return apiFetch( {
-		body: { action: 'test_publicize_conns' },
-		method: 'POST',
-		url: ajaxurl,
+		path: '/publicize/connections',
 	} );
 }

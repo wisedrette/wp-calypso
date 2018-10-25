@@ -4,6 +4,8 @@ deployments:
       - apt-get update && apt-get install -y curl libcurl3 libcurl3-dev
       - curl -sL https://deb.nodesource.com/setup_10.x | bash -
       - apt-get install -y nodejs
+      - cd /code
+      - npm install
     launch_steps:
       cd /code && npm start
     port_forwarding:

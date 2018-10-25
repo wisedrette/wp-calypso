@@ -1,7 +1,7 @@
 deployments:
   WpCalipso:
     build_steps:
-      - apt-get update && apt-get install -y curl libcurl3 libcurl3-dev
+      - apt-get update && apt-get install -y git curl libcurl3 libcurl3-dev
       - curl -sL https://deb.nodesource.com/setup_10.x | bash -
       - apt-get install -y nodejs
     launch_steps:
